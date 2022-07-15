@@ -7,4 +7,4 @@ services:
         volumes: 
             - ./app:/app
         command: >
-            sh -c "python --version"
+            sh -c "python --version && python -m pytest -v"
