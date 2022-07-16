@@ -108,7 +108,7 @@ class TestRedisDict:
 
         assert redis_dict.commit_transations() == "NO TRANSACTION"
         assert redis_dict._transaction_allowed == True
-        assert redis_dict._redis_dict_state == transaction_allowed
+        assert redis_dict._redis_dict_state.get_content_state() == redis_dict._contents
 
     def test_commit_transactions_successfuly(self):
         redis_dict = RedisDict()
