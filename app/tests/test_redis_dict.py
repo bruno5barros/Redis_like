@@ -74,6 +74,17 @@ class TestRedisDict:
     def test_search_multiple_content_value(self):
         redis_dict = RedisDict()
         redis_dict._contents = {tuple([1]): "Same element", tuple(
-            {2}): "Same element", tuple({3: 3}): "Same element"}
+            {2}): "Same element", tuple({3: 3}): "Same element", tuple({4: 4}): "Fourth redis element"}
 
         assert [(1,), (2,), (3,)] == redis_dict.find_content("Same element")
+
+    def test_begin_transactions_successfuly(self):
+        redis_dict = RedisDict()
+
+        assert True == redis_dict.begin_transactions()
+
+    def test_begin_transactions_twice(self):
+        redis_dict = RedisDict()
+
+        assert True == redis_dict.begin_transactions()
+        assert True == redis_dict.begin_transactions()
