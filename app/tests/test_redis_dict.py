@@ -37,3 +37,21 @@ class TestRedisDict:
         assert "First redis element" == redis_dict._contents.get((1,))
         assert "Second redis element" == redis_dict._contents.get((2,))
         assert "Third redis element" == redis_dict._contents.get((3,))
+
+    def test_remove_content_successfuly(self):
+        redis_dict = RedisDict()
+        redis_dict._contents = {1: "First redis element"}
+
+        assert "First redis element" == redis_dict.unset_content(1)
+
+    def test_remove_content_key_doesnt_exists(self):
+        redis_dict = RedisDict()
+        redis_dict._contents = {1: "First redis element"}
+
+        assert None == redis_dict.unset_content(2)
+
+    def test_remove_content_mutable_key(self):
+        redis_dict = RedisDict()
+        redis_dict._contents = {tuple([1]): "First redis element"}
+
+        assert "First redis element" == redis_dict.unset_content((1,))
