@@ -2,16 +2,18 @@ import pytest
 from redis.redis_dict import RedisDict
 
 
-class TectRedisDict:
+class TestRedisDict:
 
     def test_get_successfuly(self):
-        RedisDict._content = {1: "First redis element"}
+        redis_dict = RedisDict()
+        redis_dict._content = {1: "First redis element"}
 
-        content = RedisDict.get_content(1)
+        content = redis_dict.get_content(1)
 
-        assert RedisDict._content == content
+        assert redis_dict._content.get(1, None) == content
 
     def test_get_does_not_exit(self):
-        content = RedisDict.get_content(1)
+        redis_dict = RedisDict()
+        content = redis_dict.get_content(key=1)
 
         assert None == content
