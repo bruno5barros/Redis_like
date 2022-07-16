@@ -52,10 +52,28 @@ class TestRedisDict:
 
     def test_remove_content_mutable_key(self):
         redis_dict = RedisDict()
-        redis_dict._contents = {tuple([1]): "First redis element"}
-        redis_dict.set_content(tuple({2}), "Second redis element")
-        redis_dict.set_content(tuple({3: 3}), "Third redis element")
+        redis_dict._contents = {tuple([1]): "First redis element", tuple(
+            {2}): "Second redis element", tuple({3: 3}): "Third redis element"}
 
         assert "First redis element" == redis_dict.unset_content((1,))
         assert "Second redis element" == redis_dict._contents.get((2,))
         assert "Third redis element" == redis_dict._contents.get((3,))
+
+    def test_search_one_content_value(self):
+        redis_dict = RedisDict()
+        redis_dict._contents = {1: "First redis element"}
+
+        assert [1] == redis_dict.find_content("First redis element")
+
+    def test_search_content_value_dosent_exists(self):
+        redis_dict = RedisDict()
+        redis_dict._contents = {1: "First redis element"}
+
+        assert [] == redis_dict.find_content("Second redis element")
+
+    def test_search_multiple_content_value(self):
+        redis_dict = RedisDict()
+        redis_dict._contents = {tuple([1]): "Same element", tuple(
+            {2}): "Same element", tuple({3: 3}): "Same element"}
+
+        assert [(1,), (2,), (3,)] == redis_dict.find_content("Same element")
