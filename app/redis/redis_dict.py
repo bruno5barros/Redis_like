@@ -1,7 +1,7 @@
 class RedisDict:
 
     def __init__(self):
-        self._content = {}
+        self._contents = {}
 
     def get_content(self, key):
-        return self._content.get(key, None)
+        return self._contents.get(key)
