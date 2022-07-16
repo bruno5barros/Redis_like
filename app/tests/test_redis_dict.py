@@ -95,3 +95,31 @@ class TestRedisDict:
 
         assert transaction_allowed == transaction_allowed2
         assert redis_state.get_content_state() == redis_state2.get_content_state()
+
+    def test_commit_transactions_closed(self):
+        redis_dict = RedisDict()
+
+        assert redis_dict.commit_transations() == "Transactions are closed."
+
+    def test_commit_no_transactions(self):
+        redis_dict = RedisDict()
+        redis_dict._contents = {1: "First redis element"}
+        transaction_allowed, redis_state = redis_dict.begin_transactions()
+
+        assert redis_dict.commit_transations() == "NO TRANSACTION"
+        assert redis_dict._transaction_allowed == True
+        assert redis_dict._redis_dict_state == transaction_allowed
+
+    def test_commit_transactions_successfuly(self):
+        redis_dict = RedisDict()
+        redis_dict._contents = {1: "First redis element"}
+        redis_dict._redis_dict_state = True
+        transaction_allowed, redis_state = redis_dict.begin_transactions()
+        redis_dict._contents = {1: "First redis element",
+                                tuple({2}): "Second redis element"}
+
+        assert redis_dict.commit_transations() == "Commited."
+        assert redis_dict._contents == {1: "First redis element",
+                                        tuple({2}): "Second redis element"}
+        assert redis_dict._transaction_allowed == False
+        assert redis_dict._redis_dict_state == None
