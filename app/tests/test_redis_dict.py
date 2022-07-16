@@ -53,5 +53,9 @@ class TestRedisDict:
     def test_remove_content_mutable_key(self):
         redis_dict = RedisDict()
         redis_dict._contents = {tuple([1]): "First redis element"}
+        redis_dict.set_content(tuple({2}), "Second redis element")
+        redis_dict.set_content(tuple({3: 3}), "Third redis element")
 
         assert "First redis element" == redis_dict.unset_content((1,))
+        assert "Second redis element" == redis_dict._contents.get((2,))
+        assert "Third redis element" == redis_dict._contents.get((3,))
