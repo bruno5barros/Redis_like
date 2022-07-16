@@ -29,6 +29,4 @@ class RedisDict:
                 copy.deepcopy(self._contents))
             self._transaction_allowed = True
 
-            return self._transaction_allowed, self._redis_dict_state
-
         return self._transaction_allowed, self._redis_dict_state
