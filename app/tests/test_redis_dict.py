@@ -81,10 +81,17 @@ class TestRedisDict:
     def test_begin_transactions_successfuly(self):
         redis_dict = RedisDict()
 
-        assert True == redis_dict.begin_transactions()
+        transaction_allowed, redis_state = redis_dict.begin_transactions()
+
+        assert True == transaction_allowed
+        assert redis_state.get_content_state() != None
 
     def test_begin_transactions_twice(self):
         redis_dict = RedisDict()
 
-        assert True == redis_dict.begin_transactions()
-        assert True == redis_dict.begin_transactions()
+        transaction_allowed, redis_state = redis_dict.begin_transactions()
+        redis_dict._contents = {1: "First redis element"}
+        transaction_allowed2, redis_state2 = redis_dict.begin_transactions()
+
+        assert transaction_allowed == transaction_allowed2
+        assert redis_state.get_content_state() == redis_state2.get_content_state()
