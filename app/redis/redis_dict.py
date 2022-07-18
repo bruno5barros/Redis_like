@@ -12,6 +12,9 @@ class RedisDict:
     def get_content(self, key):
         return self._contents.get(key)
 
+    def get_all_content(self):
+        print("List of contents: \n", self._contents)
+
     def set_content(self, key, value):
         key = tuple(key) if isinstance(key, (list, set, dict)) else key
         self._contents[key] = value
