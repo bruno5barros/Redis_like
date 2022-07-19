@@ -26,7 +26,7 @@ class RedisDict:
     def find_content(self, value):  # O(n) Grow linearly based on n
         return [key for key, dict_value in self._contents.items() if dict_value == value]
 
-    def begin_transactions(self):  # O(1)
+    def begin_transactions(self):  # O(n)
         if not self._transaction_allowed:
             self._redis_dict_state = RedisDictState(
                 copy.deepcopy(self._contents))
@@ -46,7 +46,7 @@ class RedisDict:
 
         return "Transactions are closed."
 
-    def rollback_transations(self):  # O(1)
+    def rollback_transations(self):  # O(n)
         if self._transaction_allowed and self._redis_dict_state:
             if self._contents != self._redis_dict_state.get_content_state():
                 self._contents = self._redis_dict_state.get_content_state()
