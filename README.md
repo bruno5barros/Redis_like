@@ -18,7 +18,7 @@ Dictionary or OrderedDictionary
 To implement the state I used a single object instead of a list of it for simplicity.
 
 What is the Big O complexity of each operation?
-I will add that to the methods
+I will add the run time complexity of those methods in the code.
 
 ## Assumptions
 
