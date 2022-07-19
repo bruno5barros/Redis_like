@@ -46,7 +46,7 @@ class RedisDict:
 
         return "Transactions are closed."
 
-    def rollback_transations(self):  # O(n)
+    def rollback_transations(self):  # O(n) Space Complexity
         if self._transaction_allowed and self._redis_dict_state:
             if self._contents != self._redis_dict_state.get_content_state():
                 self._contents = self._redis_dict_state.get_content_state()
