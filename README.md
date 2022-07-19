@@ -6,7 +6,7 @@ any such mechanisms)
 
 ## Run the project
 
-You need to have docker to run the code.
+You need to have docker to run the code and the tests.
 To run the project use the following command:
 
 - docker-compose run app
@@ -27,6 +27,8 @@ I am assuming all the data we insert before starting a transaction are automatic
 ## Tests
 
 I used TDD to develop my tests and I love tests because they ensure the quality of the code.
+
+##
 
 I hope to see you soon and discuss this implementation in person. I am open to helping with any questions.
 
